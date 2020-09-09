@@ -1,0 +1,2 @@
+Requirements:
+* mysql-connector-cpp

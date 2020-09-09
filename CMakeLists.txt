@@ -7,8 +7,8 @@ project(
     DESCRIPTION "HR Application"
 )
 
-set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/Modules")
+list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/Modules")
 
-add_subdirectory(src)
+# add_subdirectory(src)
 add_subdirectory(apps)
-add_subdirectory(tests)
+# add_subdirectory(tests)

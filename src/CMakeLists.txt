@@ -1,4 +1,4 @@
-set(HEADER_LIST "${HR_SOURCE_DIR}/include/hr/lib.hpp")
+file(GLOB HEADER_LIST CONFIGURE_DEPENDS "${HR_SOURCE_DIR}/include/hr/*.hpp")
 
 add_library(hrlib hrlib.cpp ${HEADER_LIST})
 
@@ -14,5 +14,14 @@ target_include_directories(hrlib PUBLIC ../include)
 
 find_package(MySQLCppConn REQUIRED)
 
-include_directories(${MySQLCppConn_INLUDE_DIRS})
-target_link_libraries(hrlib ${MySQLCppConn_LIBRARIES})
+message("found mysqlcppconn libraries: ${MySQLCppConn_LIBRARIES}")
+message("found mysqlcppconn directories: ${MySQLCppConn_INCLUDE_DIRS}")
+
+target_include_directories(hrlib PRIVATE ${MySQLCppConn_INCLUDE_DIRS})
+target_link_libraries(hrlib PRIVATE ${MySQLCppConn_LIBRARIES})
+
+source_group(
+    TREE "${PROJECT_SOURCE_DIR/includes}"
+    PREFIX "Header Files"
+    FILES ${HEADER_LIST}
+)
