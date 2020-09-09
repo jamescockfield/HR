@@ -1,7 +1,7 @@
 #include <iostream>
 #include "HRConfig.h"
 // #include "hrlib.hpp"
-#include <mysql.h>
+#include <mysqlx/xdevapi.h>
 
 int main(int argc, char *argv[]) {
     std::cout << argv[0] << " Version " << HR_VERSION_MAJOR << "."
