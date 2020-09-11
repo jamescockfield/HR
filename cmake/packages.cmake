@@ -8,34 +8,32 @@ FetchContent_MakeAvailable(cpp_dotenv)
 list(APPEND MAIN_LIBRARIES cpp_dotenv)
 
 find_package(MYSQL REQUIRED)
-if (MYSQL_FOUND)
 
-    list(APPEND MAIN_LIBRARIES ${MYSQL_LIBRARY})
-    list(APPEND MAIN_INCLUDE_DIRS ${MYSQL_INCLUDE_DIR})
+list(APPEND MAIN_LIBRARIES ${MYSQL_LIBRARY})
+list(APPEND MAIN_INCLUDE_DIRS ${MYSQL_INCLUDE_DIR})
 
-    message("found MYSQL library: ${MYSQL_LIBRARY}")
-    message("found MYSQL directory: ${MYSQL_INCLUDE_DIR}")
-    message("============")
+message("found MYSQL library: ${MYSQL_LIBRARY}")
+message("found MYSQL directory: ${MYSQL_INCLUDE_DIR}")
+message("============")
 
-endif()
+find_package(MYSQLPP)
+if(MYSQLPP_FOUND)
 
-find_package(MySQLCppConn REQUIRED)
-if(MySQLCppConn_FOUND)
+    list(APPEND MAIN_LIBRARIES ${MYSQLPP_LIBRARIES})
+    list(APPEND MAIN_INCLUDE_DIRS ${MYSQLPP_INCLUDE_DIRS})
 
-    list(APPEND MAIN_LIBRARIES ${MySQLCppConn_LIBRARIES})
-    list(APPEND MAIN_INCLUDE_DIRS ${MySQLCppConn_INCLUDE_DIRS})
-
-    message("found MySQLCppConn library: ${MySQLCppConn_LIBRARY}")
-    message("found MySQLCppConn directory: ${MySQLCppConn_INCLUDE_DIR}")
+    message("found MYSQLPP library: ${MYSQLPP_LIBRARY}")
+    message("found MYSQLPP directory: ${MYSQLPP_INCLUDE_DIR}")
     message("============")
 
 else()
-    FetchContent_Declare(
-        MySQLCppConn 
-        GIT_REPOSITORY https://github.com/mysql/mysql-connector-cpp.git
-        GIT_TAG 8.0.21
-    )
-    FetchContent_MakeAvailable(MySQLCppConn)
 
-    list(APPEND MAIN_LIBRARIES connector)
+    FetchContent_Declare(
+        mariadb-connector-cpp
+        GIT_REPOSITORY https://github.com/ericcurtin/mariadb-connector-cpp
+        GIT_TAG 1.1.11
+    )
+    FetchContent_MakeAvailable(mariadb-connector-cpp)
+
+    list(APPEND MAIN_LIBRARIES mariadb-connector-cpp)
 endif()

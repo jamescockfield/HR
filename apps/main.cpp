@@ -1,12 +1,11 @@
 #include <iostream>
 #include "HRConfig.h"
 // #include "hrlib.hpp"
-#include <mysqlx/xdevapi.h>
+#include <mysql++/mysql++.h>
 #include <dotenv.h>
 
 using namespace std;
 using namespace dotenv;
-using namespace mysqlx;
 
 int main(int argc, char *argv[]) {
 
@@ -17,21 +16,25 @@ int main(int argc, char *argv[]) {
 
     cout << "MYSQL_PORT: " << stoi(env["MYSQL_PORT"]) << endl;
 
-    const char *url = "mysqlx://HR:password@127.0.0.1/HR";
-    Session session(url);
-    // Session session = getSession(
-            // env["MYSQL_HOST"],
-            // stoi(env["MYSQL_PORT"]),
-            // env["MYSQL_USER"],
-            // env["MYSQL_PASSWORD"],
-            // env["MYSQL_DB"]
-        // );
+    mysqlpp::Connection connection(
+            "foodbank",
+            "localhost",
+            "foodbank", 
+            "password"
+        );
 
-    cout << "Getting session successful, getting schema..." << endl;
+    mysqlpp::Query query = connection.query("SHOW TABLES");
+    if (mysqlpp::StoreQueryResult res = query.store()) {
 
-    Schema schema = session.getSchema("HR");
+        mysqlpp::StoreQueryResult::const_iterator it;
+        for (it = res.begin(); it != res.end(); it++) {
 
-    cout << schema.getName() << endl;
+            mysqlpp::Row row = *it;
+            cout << row[0] << endl;
+        }
+    }
+
+    cout << connection.server_status() << endl;
 
     return 1;
 }
