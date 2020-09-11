@@ -1,8 +1,8 @@
 #include <iostream>
 #include "HRConfig.h"
-// #include "hrlib.hpp"
 #include <mysql++/mysql++.h>
 #include <dotenv.h>
+#include <EnvReader.h>
 
 using namespace std;
 using namespace dotenv;
@@ -13,6 +13,10 @@ int main(int argc, char *argv[]) {
         << HR_VERSION_MINOR << endl;
 
     env.load_dotenv();
+
+    EnvReader *env2 = new EnvReader();
+    cout << "env GOT: " << env2->get("MYSQL_HOST") << endl;
+    // cout << "env GOT: " << env2::get("MYSQL_PORT") << endl;
 
     cout << "MYSQL_PORT: " << stoi(env["MYSQL_PORT"]) << endl;
 
