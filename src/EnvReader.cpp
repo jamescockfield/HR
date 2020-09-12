@@ -24,6 +24,11 @@ pair<string, string> EnvReader::parseLine(string line) {
     string key = line.substr(0, delimiter);
     string value = line.substr(delimiter + 1, line.length());
 
+    if (value.find("\"") != string::npos) {
+
+        value = value.substr(1, value.length() - 2);
+    }
+
     return pair<string, string>(key, value);
 }
 

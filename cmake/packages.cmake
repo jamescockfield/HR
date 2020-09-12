@@ -1,12 +1,3 @@
-include(FetchContent)
-FetchContent_Declare(
-    cpp_dotenv
-    GIT_REPOSITORY https://github.com/adeharo9/cpp-dotenv
-    GIT_TAG v1.0.0-alpha
-)
-FetchContent_MakeAvailable(cpp_dotenv)
-list(APPEND MAIN_LIBRARIES cpp_dotenv)
-
 find_package(MYSQL REQUIRED)
 
 list(APPEND MAIN_LIBRARIES ${MYSQL_LIBRARY})

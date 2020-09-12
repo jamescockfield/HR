@@ -1,30 +1,22 @@
 #include <iostream>
 #include "HRConfig.h"
 #include <mysql++/mysql++.h>
-#include <dotenv.h>
 #include <EnvReader.h>
 
 using namespace std;
-using namespace dotenv;
 
 int main(int argc, char *argv[]) {
 
     cout << argv[0] << " Version " << HR_VERSION_MAJOR << "."
         << HR_VERSION_MINOR << endl;
 
-    env.load_dotenv();
-
     EnvReader *env2 = new EnvReader();
-    cout << "env GOT: " << env2->get("MYSQL_HOST") << endl;
-    // cout << "env GOT: " << env2::get("MYSQL_PORT") << endl;
-
-    cout << "MYSQL_PORT: " << stoi(env["MYSQL_PORT"]) << endl;
 
     mysqlpp::Connection connection(
-            "foodbank",
-            "localhost",
-            "foodbank", 
-            "password"
+            env2->get("MYSQL_DB"),
+            env2->get("MYSQL_HOST"),
+            env2->get("MYSQL_USER"),
+            env2->get("MYSQL_PASSWORD")
         );
 
     mysqlpp::Query query = connection.query("SHOW TABLES");
